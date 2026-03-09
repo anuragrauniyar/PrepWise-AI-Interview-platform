@@ -1,4 +1,5 @@
 import React from 'react'
+import LogoutButton from "@/components/LogoutButton";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
@@ -10,8 +11,8 @@ const Page = async () => {
     const user = await getCurrentUser();
 
     const [userInterviews, latestInterviews] = await Promise.all([
-        await getInterviewsByUserId(user?.id!),
-        await getLatestInterviews({ userId: user?.id! })
+        await getInterviewsByUserId(user?.id),
+        await getLatestInterviews({ userId: user?.id })
     ]);
 
     const hasPastInterviews = userInterviews?.length > 0;

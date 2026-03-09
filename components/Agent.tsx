@@ -91,13 +91,22 @@ const Agent = ({ userName, userId, type, interviewId, questions }: AgentProps) =
         setCallStatus(CallStatus.CONNECTING);
 
         if(type ==='generate') {
+            if (!userId) {
+            console.error("Missing userId");
+            return;
+        }
+        try {
             await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!, {
                 variableValues: {
                     username: userName,
-                    userid: userId,
+                    userId: userId,
                 }
-            })
-        } else {
+            });
+            } catch (err) {
+                console.error("Vapi start error:", err);
+                setCallStatus(CallStatus.INACTIVE);
+                }
+            } else {
             let formattedQuestions = '';
 
             if(questions) {

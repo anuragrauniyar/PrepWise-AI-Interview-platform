@@ -5,6 +5,29 @@ import {cookies} from "next/headers";
 
 const ONE_WEEK = 60 * 60 * 24 * 7;
 
+export async function signOut() {
+    try {
+        const cookieStore = await cookies();
+
+        cookieStore.set('session', '', {
+            maxAge: 0,
+            path: '/',
+        });
+
+        return {
+            success: true,
+            message: 'Signed out successfully.'
+        }
+    } catch (e: any) {
+        console.error('Error signing out', e);
+
+        return {
+            success: false,
+            message: 'Failed to sign out'
+        }
+    }
+}
+
 export async function signUp(params: SignUpParams) {
     const { uid, name, email } = params;
 
