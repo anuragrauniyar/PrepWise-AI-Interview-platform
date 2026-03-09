@@ -5,7 +5,8 @@ import {generateObject} from "ai";
 import {google} from "@ai-sdk/google";
 import {feedbackSchema} from "@/constants";
 
-export async function getInterviewsByUserId(userId: string): Promise<Interview[] | null> {
+export async function getInterviewsByUserId(userId: string): Promise<Interview[]> {
+    if (!userId) return [];
     const interviews = await db
         .collection('interviews')
         .where('userId', '==', userId)
